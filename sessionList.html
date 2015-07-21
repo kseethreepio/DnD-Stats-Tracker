@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Tabletop Sabermetrics - Session List</title>
+
+    <!-- Bootstrap -->
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="css/bootstrap-theme.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/jumbotron-narrow.css">
+    <link rel="stylesheet" href="css/sticky-footer.css">
+    <link rel="stylesheet" href="css/custom-nonbootstrap.css">
+
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  <!-- <div class="container theme-showcase" role="main"> -->
+    <div class="container">
+    <div class="header clearfix">
+      <h4 class="text-muted">Tabletop Sabermetrics</h4>
+    </div>
+
+    <div class="row marketing">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%"></div>
+        </div>
+        <span class="cust-progress-subtext">Adding new campaign session to database...</span>
+        
+        <br>
+        <br>
+        <p>
+        
+        <div class="alert alert-danger" role="alert">
+          <strong>Oh snap!</strong> Failed to save. Try again.
+        </div>
+        
+        <br>
+        
+        <div class="alert alert-success" role="alert">
+          <strong>It worked!</strong> All set. New campaign session is in the list and all that stuff.
+        </div>
+        
+        <br>
+        <hr>
+        <br>
+
+        <h4>Session List</h4><br>
+
+        <table class="plain table">
+            <tr class="plain">
+              <td>Session name goes here...</td>
+              <td><button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">View session's stats</button></td>
+            </tr>
+            <tr class="plain">
+              <td>Session name goes here...</td>
+              <td><button type="button" class="btn btn-xs btn-default" id="viewStatsTest2">View session's stats</button></td>
+            </tr>
+        </table>
+        
+        <br>
+        <br>
+        <p>
+        
+        <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#addSession">+ Add session</button>
+        <br>
+        <br>
+        <p>
+        <button type="button" class="btn btn-xs btn-default" id="btnGoHome">Go home</button>
+
+        <div class="modal fade" id="addSession" tabindex="-1" role="dialog" aria-labelledby="addSessionDialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label"Close"><span aria-hidden="true">&times;</span></button>
+                            <h5 class="modal-title" id="addSessionDialogLabel">Add a new session</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="session-name" class="control-label">Session name:</label>
+                                    <textarea class="form-control" id="sessionName-text">Delete this text and enter the session's name here (suggestion: use the session's date as its name)</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="players-name" class="control-label">Player characters' names:</label>
+                                    <textarea class="form-control" id="pcNames-text">Delete this text and enter the player characters' names, separated by commas</textarea>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <label for="track-all-rolls" class="control-label">Check this if you will be tracking every single roll (i.e. not just 1s and 20s)</label>
+                                    <input type="checkbox" class="form-control" id="trackAllRolls-checkbox" value="true">
+                                </div> -->
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save and start recording session stats</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </div>
+
+    <footer class="footer" id="footer-2015">
+    </footer>
+
+    <script>
+    var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
+
+    $("#testButton").click(function (e) {
+      var valuebar = "test value woot";
+      myDataRef.set({keyfoo: valuebar});
+    });
+
+    myDataRef.on("child_added", function(snapshot) {
+      var dumpSnapshot = snapshot.val();
+      alert(dumpSnapshot);
+    });
+    
+    //TODO: Actually get this hooked up to the right page to avoid the xscope error
+    $("#btnGoHome").click(function (e) {
+        $.get("index.html");
+    });
+
+    //TODO: Actually get this hooked up to the right button names, and summary page of stats
+    $("#btnViewSessionStats").click(function (e) {
+        $.get("sessionStats.html");
+    });
+    
+    // Load footer contents
+    $("#footer-2015").load("footer.html");
+    </script>
+  
+  </div>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+.plain {
+    border: hidden !important;
+}
+
+.cust-progress-subtext {
+    color: #8d8d8d;
+    font-style: italic;
+}
