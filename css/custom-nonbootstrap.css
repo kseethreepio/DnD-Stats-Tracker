@@ -6,3 +6,13 @@
     color: #8d8d8d;
     font-style: italic;
 }
+
+.sessionTotals {
+    color: #3366cc;
+    font-weight: bold;
+    background-color: #c1d1ef;
+}
+
+.textWhite {
+    color: #ffffff;
+}

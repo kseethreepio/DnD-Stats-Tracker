@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Tabletop Sabermetrics - Record Session Stats</title>
+
+    <!-- Bootstrap -->
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="css/bootstrap-theme.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/jumbotron-narrow.css">
+    <link rel="stylesheet" href="css/sticky-footer.css">
+    <link rel="stylesheet" href="css/custom-nonbootstrap.css">
+
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  <!-- <div class="container theme-showcase" role="main"> -->
+    <div class="container">
+    <div class="header clearfix">
+      <h4 class="text-muted">Tabletop Sabermetrics</h4>
+    </div>
+
+    <div class="row marketing">        
+        <div class="alert alert-danger" role="alert">
+          <strong>Oh snap!</strong> Failed to save roll info. Try again.
+        </div>
+        
+        <br>
+        <h4>Session Stats: Running totals</h4><br>
+
+        <table class="plain table">
+            <theader>
+                <th>Player Name</th>
+                <th>Skill Checks</th>
+                <th>Attack Rolls</th>
+                <th>Other Rolls</th>
+            </theader>
+            <tr class="plain">
+              <td>
+                  DM/GM <span class="label label-success">Current crit leader</span>
+              </td>
+              <!-- Skill checks -->
+              <td>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit!</button>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit fail!</button>
+              </td>
+              <!-- Attack rolls -->
+              <td>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit!</button>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit fail!</button>
+              </td>
+              <!-- Other rolls -->
+              <td>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit!</button>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit fail!</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                  Player Foo
+              </td>
+              <!-- Skill checks -->
+              <td>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit!</button>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit fail!</button>
+              </td>
+              <!-- Attack rolls -->
+              <td>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit!</button>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit fail!</button>
+              </td>
+              <!-- Other rolls -->
+              <td>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit!</button>
+                  <button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">Crit fail!</button>
+              </td>
+            </tr>
+        </table>
+        
+        <br>
+        <br>
+        <p>
+        
+        <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#endSession">Done with session</button>
+        <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#viewSessionStats">View current roll stats</button>
+        <br>
+        <br>
+        <p>
+        <button type="button" class="btn btn-xs btn-default" id="btnGoHome">Go home</button>
+
+        <div class="modal fade" id="endSession" tabindex="-1" role="dialog" aria-labelledby="endSessionDialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label"Close"><span aria-hidden="true">&times;</span></button>
+                            <h5 class="modal-title" id="addSessionDialogLabel">Are you sure you want to end the session?</h5>
+                        </div>
+                        <div class="modal-body">
+                            After clicking "Save stats and end session," you'll be returned to the campaign list page, and the current session's roll stats will be saved.<br><br>
+                            You can view the stats anytime from the Campaign List page.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Save stats and end session</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="modal fade" id="viewSessionStats" tabindex="-1" role="dialog" aria-labelledby="viewSessionStatsDialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label"Close"><span aria-hidden="true">&times;</span></button>
+                            <h5 class="modal-title" id="addSessionDialogLabel">Current roll stats for this session</h5>
+                        </div>
+                        <div class="modal-body">
+                            <table class="plain table">
+                                <theader>
+                                    <th>Player Name</th>
+                                    <th>Skill Checks</th>
+                                    <th>Attack Rolls</th>
+                                    <th>Other Rolls</th>
+                                    <th>Totals</th>
+                                </theader>
+                                <tr class="plain">
+                                  <td>DM/GM<br><span class="label label-success">Current crit leader</span></td>
+                                  <!-- Skill checks -->
+                                  <td>99 crits<br>99 crit fails</td>
+                                  <!-- Attack rolls -->
+                                  <td>99 crits<br>99 crit fails</td>
+                                  <!-- Other rolls -->
+                                  <td>99 crits<br>99 crit fails</td>
+                                  <!-- Totals -->
+                                  <td>99 crits<br>99 crit fails</td>
+                                </tr>
+                                <tr>
+                                  <td>Player Foo</td>
+                                  <!-- Skill checks -->
+                                  <td>99 crits<br>99 crit fails</td>
+                                  <!-- Attack rolls -->
+                                  <td>99 crits<br>99 crit fails</td>
+                                  <!-- Other rolls -->
+                                  <td>99 crits<br>99 crit fails</td>
+                                  <!-- Totals -->
+                                  <td>99 crits<br>99 crit fails</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </div>
+
+    <footer class="footer" id="footer-2015">
+    </footer>
+
+    <script>
+    var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
+
+    $("#testButton").click(function (e) {
+      var valuebar = "test value woot";
+      myDataRef.set({keyfoo: valuebar});
+    });
+
+    myDataRef.on("child_added", function(snapshot) {
+      var dumpSnapshot = snapshot.val();
+      alert(dumpSnapshot);
+    });
+    
+    //TODO: Actually get this hooked up to the right page to avoid the xscope error
+    $("#btnGoHome").click(function (e) {
+        $.get("index.html");
+    });
+
+    //TODO: Actually get this hooked up to the right button names, and summary page of stats
+    $("#btnViewSessionStats").click(function (e) {
+        $.get("sessionStats.html");
+    });
+    
+    // Load footer contents
+    $("#footer-2015").load("footer.html");
+    </script>
+  
+  </div>
+  </body>
+</html>
