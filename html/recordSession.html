@@ -94,12 +94,8 @@
         <br>
         <p>
         
-        <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#endSession">Done with session</button>
-        <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#viewSessionStats">View current roll stats</button>
-        <br>
-        <br>
-        <p>
-        <button type="button" class="btn btn-xs btn-default" id="btnGoHome">Go home</button>
+        <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#endSession">Done with session</button>
+        <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#viewSessionStats">View current roll stats</button>
 
         <div class="modal fade" id="endSession" tabindex="-1" role="dialog" aria-labelledby="endSessionDialog">
                 <div class="modal-dialog" role="document">
@@ -109,12 +105,12 @@
                             <h5 class="modal-title" id="addSessionDialogLabel">Are you sure you want to end the session?</h5>
                         </div>
                         <div class="modal-body">
-                            After clicking "Save stats and end session," you'll be returned to the campaign list page, and the current session's roll stats will be saved.<br><br>
-                            You can view the stats anytime from the Campaign List page.
+                            After clicking "End session," you'll be returned to the campaign list page. The current session's roll stats have been saved automatically as you've recorded rolls.<br><br>
+                            You can view the stats anytime from the campaign list page.
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Save stats and end session</button>
+                            <input type="submit" class="btn btn-primary" id="btnEndSession" value="End session">
                         </div>
                     </div>
                 </div>
@@ -182,25 +178,14 @@
     <script>
     var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
 
-    $("#testButton").click(function (e) {
-      var valuebar = "test value woot";
-      myDataRef.set({keyfoo: valuebar});
-    });
-
     myDataRef.on("child_added", function(snapshot) {
       var dumpSnapshot = snapshot.val();
       alert(dumpSnapshot);
     });
-    
-    //TODO: Actually get this hooked up to the right page to avoid the xscope error
-    $("#btnGoHome").click(function (e) {
-        $.get("index.html");
-    });
 
-    //TODO: Actually get this hooked up to the right button names, and summary page of stats
-    $("#btnViewSessionStats").click(function (e) {
-        $.get("sessionStats.html");
-    });
+	$("#btnEndSession").click(function (e) {
+		window.location = "sessionList.html"
+	});
     
     // Load footer contents
     $("#footer-2015").load("footer.html");

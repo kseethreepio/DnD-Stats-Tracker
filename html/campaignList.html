@@ -63,11 +63,11 @@
             <tr class="plain">
               <td>Campaign name goes here...<br><span class="label label-default">D&amp;D 4e</span></td>
               <!-- <td><span class="campaignChooseButton">hi</span></td> -->
-              <td><button type="button" class="btn btn-s btn-primary" id="chooseCampaignTest1">Choose this campaign</button></td>
+              <td><button type="button" class="btn btn-s btn-primary" id="btnChooseCampaign">Choose this campaign</button></td>
             </tr>
             <tr class="plain">
               <td>Campaign name goes here...<br><span class="label label-default">D&amp;D 4e</span></td>
-              <td><button type="button" class="btn btn-s btn-primary" id="chooseCampaignTest2">Choose this campaign</button></td>
+              <td><button type="button" class="btn btn-s btn-primary" id="btnChooseCampaign">Choose this campaign</button></td>
             </tr>
         </table>
         
@@ -119,24 +119,17 @@
     <script>
     var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
 
-    $("#testButton").click(function (e) {
-      var valuebar = "test value woot";
-      myDataRef.set({keyfoo: valuebar});
-    });
-
     myDataRef.on("child_added", function(snapshot) {
       var dumpSnapshot = snapshot.val();
       alert(dumpSnapshot);
     });
     
-    //TODO: Actually get this hooked up to the right page to avoid the xscope error
     $("#btnGoHome").click(function (e) {
-        $.get("index.html");
+        window.location = "/";
     });
     
-    //TODO: Actually get this hooked up to the right button names
     $("#btnChooseCampaign").click(function (e) {
-        $.get("campaignList.html");
+        window.location = "sessionList.html";
     });
     
     // Load footer contents

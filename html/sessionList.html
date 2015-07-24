@@ -68,11 +68,11 @@
         <table class="plain table">
             <tr class="plain">
               <td>Session name goes here...</td>
-              <td><button type="button" class="btn btn-xs btn-default" id="viewStatsTest1">View session's stats</button></td>
+              <td><button type="button" class="btn btn-xs btn-default" id="btnViewSessionStats">View session's stats</button></td>
             </tr>
             <tr class="plain">
               <td>Session name goes here...</td>
-              <td><button type="button" class="btn btn-xs btn-default" id="viewStatsTest2">View session's stats</button></td>
+              <td><button type="button" class="btn btn-xs btn-default" id="btnViewSessionStats">View session's stats</button></td>
             </tr>
         </table>
         
@@ -85,6 +85,7 @@
         <br>
         <p>
         <button type="button" class="btn btn-xs btn-default" id="btnGoHome">Go home</button>
+        <button type="button" class="btn btn-xs btn-primary" id="btnGoBack">Go back</button>
 
         <div class="modal fade" id="addSession" tabindex="-1" role="dialog" aria-labelledby="addSessionDialog">
                 <div class="modal-dialog" role="document">
@@ -111,7 +112,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save and start recording session stats</button>
+                            <input type="submit" class="btn btn-primary" id="btnSaveSession" value="Save and start recording session stats">
                         </div>
                     </div>
                 </div>
@@ -132,24 +133,25 @@
     <script>
     var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
 
-    $("#testButton").click(function (e) {
-      var valuebar = "test value woot";
-      myDataRef.set({keyfoo: valuebar});
-    });
-
     myDataRef.on("child_added", function(snapshot) {
       var dumpSnapshot = snapshot.val();
       alert(dumpSnapshot);
     });
     
-    //TODO: Actually get this hooked up to the right page to avoid the xscope error
     $("#btnGoHome").click(function (e) {
-        $.get("index.html");
+        window.location = "/";
     });
 
-    //TODO: Actually get this hooked up to the right button names, and summary page of stats
+    $("#btnGoBack").click(function (e) {
+        window.location = "campaignList.html";
+    });
+
     $("#btnViewSessionStats").click(function (e) {
-        $.get("sessionStats.html");
+        window.location = "sessionStats.html";
+    });
+
+    $("#btnSaveSession").click(function (e) {
+        window.location = "recordSession.html";
     });
     
     // Load footer contents

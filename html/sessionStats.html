@@ -95,6 +95,7 @@
         <p>
         
         <button type="button" class="btn btn-xs btn-default" id="btnGoHome">Go home</button>
+        <button type="button" class="btn btn-xs btn-primary" id="btnGoBack">Go back</button>
 
     </div>
 
@@ -111,25 +112,18 @@
     <script>
     var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
 
-    $("#testButton").click(function (e) {
-      var valuebar = "test value woot";
-      myDataRef.set({keyfoo: valuebar});
-    });
-
     myDataRef.on("child_added", function(snapshot) {
       var dumpSnapshot = snapshot.val();
       alert(dumpSnapshot);
     });
     
-    //TODO: Actually get this hooked up to the right page to avoid the xscope error
     $("#btnGoHome").click(function (e) {
-        $.get("index.html");
+        window.location = "/";
     });
 
-    //TODO: Actually get this hooked up to the right button names, and summary page of stats
-    $("#btnViewSessionStats").click(function (e) {
-        $.get("sessionStats.html");
-    });
+	$("#btnGoBack").click(function (e) {
+		window.location = "sessionList.html"
+	});
     
     // Load footer contents
     $("#footer-2015").load("footer.html");

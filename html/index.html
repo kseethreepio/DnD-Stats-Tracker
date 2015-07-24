@@ -52,18 +52,13 @@
     <script>
     var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
 
-    $("#testButton").click(function (e) {
-      var valuebar = "test value woot";
-      myDataRef.set({keyfoo: valuebar});
-    });
-
     myDataRef.on("child_added", function(snapshot) {
       var dumpSnapshot = snapshot.val();
       alert(dumpSnapshot);
     });
     
     $("#btnChooseCampaign").click(function (e) {
-        $.get("campaignList.html");
+        window.location = "campaignList.html";
     });
     
     // Load footer contents
