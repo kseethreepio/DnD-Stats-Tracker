@@ -33,12 +33,14 @@
       <h4 class="text-muted">Tabletop Sabermetrics</h4>
     </div>
 
-    <div class="row marketing">        
-        <div class="alert alert-danger" role="alert">
+    <div class="row marketing">
+        <!-- Ignore... placeholder -->
+        <!-- <div class="alert alert-danger" role="alert">
           <strong>Oh snap!</strong> Failed to save roll info. Try again.
         </div>
-        
-        <br>
+
+        <br> -->
+
         <h4>Session Stats: Running totals</h4><br>
 
         <table class="plain table">
@@ -176,12 +178,7 @@
     </footer>
 
     <script>
-    var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
-
-    myDataRef.on("child_added", function(snapshot) {
-      var dumpSnapshot = snapshot.val();
-      alert(dumpSnapshot);
-    });
+    var baseDataRef = new Firebase("https://shining-torch-7755.firebaseio.com/sessionStats");
 
 	$("#btnEndSession").click(function (e) {
 		window.location = "sessionList.html"

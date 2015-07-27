@@ -51,11 +51,6 @@
 
     <script>
     var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
-
-    myDataRef.on("child_added", function(snapshot) {
-      var dumpSnapshot = snapshot.val();
-      alert(dumpSnapshot);
-    });
     
     $("#btnChooseCampaign").click(function (e) {
         window.location = "campaignList.html";

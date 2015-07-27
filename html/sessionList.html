@@ -34,35 +34,37 @@
     </div>
 
     <div class="row marketing">
-        <div class="progress">
+        <!-- Ignore... placeholders -->
+        <!-- <div class="progress">
             <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%"></div>
         </div>
         <span class="cust-progress-subtext">Adding new campaign session to database...</span>
-        
+
         <br>
         <br>
         <p>
-        
+
         <div class="alert alert-danger" role="alert">
           <strong>Oh snap!</strong> Failed to save. Try again.
         </div>
-        
+
         <br>
-        
+
         <div class="alert alert-danger" role="alert">
           <strong>Oh snap!</strong> Failed to load session stats. Try again.
         </div>
-        
+
         <br>
-        
+
         <div class="alert alert-success" role="alert">
           <strong>It worked!</strong> All set. New campaign session is in the list and all that stuff.
         </div>
-        
+
         <br>
         <hr>
-        <br>
+        <br> -->
 
+        <!-- TODO: Load in session list w/buttons based on data in Firebase -->
         <h4>Session List</h4><br>
 
         <table class="plain table">
@@ -112,7 +114,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-primary" id="btnSaveSession" value="Save and start recording session stats">
+                            <input type="submit" class="btn btn-primary" id="btnSaveSession" data-dismiss="modal" value="Save and start recording session stats">
                         </div>
                     </div>
                 </div>
@@ -131,11 +133,29 @@
     </footer>
 
     <script>
-    var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
+    var baseDataRef = new Firebase("https://shining-torch-7755.firebaseio.com/data/sessions");
 
-    myDataRef.on("child_added", function(snapshot) {
-      var dumpSnapshot = snapshot.val();
-      alert(dumpSnapshot);
+    // If user opened this page from campaign list page, we should have the campaign name
+    // for context. This way, we know which campaign's session list to pull.
+    sCurrentURL = window.location.href;
+    sCurrentURL_queryString = (sCurrentURL.split("?"))[1];   // Index "1" since we want just the query params
+    sParentCampaignName = sCurrentURL_queryString.split("=")[1]; // TODO: Stop assuming 1 query param, and verify param name
+    
+    $("#btnSaveSession").click(function (e) {
+        sSessionName = $("#sessionName-text").val();   // TODO: Scrub input string
+        sCombinedName_raw = ((sSessionName.replace(/\s/g, "")).toLowerCase()).substring(0, 5) + ((sParentCampaignName.replace(/\s/g, "")).toLowerCase()).substring(0, 5);   // From fiddling in console, shouldn't break if raw string is shorter
+        sCombinedName = sCombinedName_raw;
+        sPcNamesList = $("#pcNames-text").val();   // TODO: Scrub input string   // TODO: Handle name collisions
+        
+        jSessionInfo = {
+            "id": sCombinedName,
+            "name": sSessionName,
+            "parentCampaign": sParentCampaignName,
+            "players": sPcNamesList
+        };
+        
+        // TODO: If about to overwrite/existing record there, show warning or error and recommend another name
+        baseDataRef.child(sCombinedName).update(jSessionInfo);
     });
     
     $("#btnGoHome").click(function (e) {
@@ -147,11 +167,11 @@
     });
 
     $("#btnViewSessionStats").click(function (e) {
-        window.location = "sessionStats.html";
+        window.location = "sessionStats.html?session=" + sCombinedName;
     });
 
     $("#btnSaveSession").click(function (e) {
-        window.location = "recordSession.html";
+        window.location = "recordSession.html?session=" + sCombinedName;
     });
     
     // Load footer contents

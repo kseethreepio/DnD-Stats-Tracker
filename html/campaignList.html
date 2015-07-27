@@ -34,29 +34,31 @@
     </div>
 
     <div class="row marketing">
-        <div class="progress">
+        <!-- Ignore... placeholders -->
+        <!-- <div class="progress">
             <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%"></div>
         </div>
         <span class="cust-progress-subtext">Adding new campaign to database...</span>
-        
+
         <br>
         <br>
         <p>
-        
+
         <div class="alert alert-danger" role="alert">
           <strong>Oh snap!</strong> Failed to save. Try again.
         </div>
-        
+
         <br>
-        
+
         <div class="alert alert-success" role="alert">
           <strong>It worked!</strong> All set. New campaign is in the list and all that stuff.
         </div>
-        
+
         <br>
         <hr>
-        <br>
+        <br> -->
 
+        <!-- TODO: Load in campaign list w/buttons based on data in Firebase -->
         <h4>Campaign List</h4><br>
 
         <table class="plain table">
@@ -98,7 +100,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                            <input type="submit" class="btn btn-primary" id="btnSaveCampaignName" value="Save" data-dismiss="modal">
                         </div>
                     </div>
                 </div>
@@ -117,11 +119,20 @@
     </footer>
 
     <script>
-    var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
+    var baseDataRef = new Firebase("https://shining-torch-7755.firebaseio.com/data/campaigns");
 
-    myDataRef.on("child_added", function(snapshot) {
-      var dumpSnapshot = snapshot.val();
-      alert(dumpSnapshot);
+    sSelectedCampaignName = "testCampaignFake";
+    
+    $("#btnSaveCampaignName").click(function (e) {
+        sCampaignName = $("#campaignName-text").val();   // TODO: Scrub input string
+        sSelectedCampaignName = sCampaignName;
+        sReducedCampaignName = ((sCampaignName.toLowerCase()).replace(/\s/g, "")).substring(0, 10)   // For consistency with session "id"...
+        jCampaignInfo = {
+            "id": sReducedCampaignName,
+            "name": sCampaignName
+        };
+        
+        baseDataRef.child(sReducedCampaignName).update(jCampaignInfo);
     });
     
     $("#btnGoHome").click(function (e) {
@@ -129,7 +140,8 @@
     });
     
     $("#btnChooseCampaign").click(function (e) {
-        window.location = "sessionList.html";
+        
+        window.location = "sessionList.html?campName=" + sReducedCampaignName;
     });
     
     // Load footer contents
