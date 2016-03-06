@@ -51,6 +51,13 @@
 
     <script>
     var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
+    myDataRef.authWithOAuthRedirect("google", function(error, authData) {
+        if (error) {
+            console.log("[ERR] Auth failed: ", error);
+        } else {
+            console.log("Sucessfully logged in.");
+        }
+    });
     
     $("#btnChooseCampaign").click(function (e) {
         window.location = "campaignList.html";
