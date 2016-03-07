@@ -2,6 +2,15 @@
     border: hidden !important;
 }
 
+#divUserContext {
+	color: #c9c9c9;
+	padding-top: 10px;
+}
+
+#divLogin {
+	padding-top: 10px;
+}
+
 .cust-progress-subtext {
     color: #8d8d8d;
     font-style: italic;

@@ -7,6 +7,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Tabletop Sabermetrics</title>
 
+    <link rel="stylesheet" href="css/custom-nonbootstrap.css">
+
     <!-- Bootstrap -->
     <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- <link href="css/bootstrap-theme.min.css" rel="stylesheet"> -->
@@ -34,10 +36,23 @@
   <body>
     <div class="container">
         <div class="header clearfix">
-          <h4 class="text-muted">Tabletop Sabermetrics</h4>
+            <h4 class="text-muted">Tabletop Sabermetrics</h4>
+            <div id="divUserContext-loggedOut">
+                Please click the button below to log in.
+            </div>
+            <div id="divUserContext-loggedIn" hidden="true">
+                Signed in as <span id="spanUsername"></span> (<a id="linkSignout" href="#">log out</a>)
+            </div>
         </div>
-        <div class="text-center">
+        <div id="divLogin" class="text-center">
             <button type="button" class="btn btn-lg btn-warning" id="btnLogin">Log in with your Google account</button>
+        </div>
+        <div id="divChooseCampaign" class="jumbotron" hidden="true">
+            To get started, <strong>choose a campaign</strong> to view or record dice roll stats.
+            <br><br><br>
+            <a href="campaignList.html">
+                <button type="button" class="btn btn-lg btn-success" id="btnChooseCampaign">Choose a campaign</button>
+            </a>
         </div>
     </div>
 
@@ -47,16 +62,57 @@
     <script>
     var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
 
+    // Main DOM events go here
     jQuery(document).on("ready", function() {
 
+        function authCallback(authdata) {
+            if (authdata) {
+                // User is now signed in -- hide login button and show UI to pick campaign.
+                // console.log("Logged in!");
+                document.getElementById("divLogin").setAttribute("hidden", "true");
+                document.getElementById("divChooseCampaign").removeAttribute("hidden");
+                document.getElementById("divUserContext-loggedOut").setAttribute("hidden", "true");
+                document.getElementById("divUserContext-loggedIn").removeAttribute("hidden");
+                document.getElementById("spanUsername").textContent = authdata.google.displayName;
+            } else {
+                // User is no longer signed in -- prompt them to log back in.
+                // console.log("Not logged in!");
+                document.getElementById("divChooseCampaign").setAttribute("hidden", "true");
+                document.getElementById("divLogin").removeAttribute("hidden");
+                document.getElementById("divUserContext-loggedIn").setAttribute("hidden", "true");
+                document.getElementById("divUserContext-loggedOut").removeAttribute("hidden");
+            }
+        }
+
+        myDataRef.onAuth(authCallback);
+
+        jQuery(document).on("mousedown", "#linkSignout", function() {
+            console.log("Signing out...");
+            myDataRef.unauth();
+        });
+
         jQuery(document).on("mousedown", "#btnLogin", function() {
-            myDataRef.authWithOAuthRedirect("google", function(error, authData) {
+
+            myDataRef.authWithOAuthPopup("google", function(error, authdata) {
                 if (error) {
-                    console.log("[ERR] Auth failed: ", error);
-                } else {
-                    // Won't hit this code path as we'll redirect after successful login.
+                    if (error.code === "TRANSPORT_UNAVAILABLE") {
+                        // Per Firebase recommendation, fall back to redirect if browser doesn't support popup
+                        myDataRef.authWithOAuthRedirect("google", function(error, authdata) {
+                            if (error) {
+                                console.log("[ERR] Auth via redirect failed: ", error);
+                            } else if (authdata) {
+                                // Success -- won't hit this code path as we'll redirect after successful login.
+                            }
+                        });
+                    } else {
+                        // Otherwise, unexpected error that should be logged.
+                        console.log("[ERR] Auth via popup failed: ", error);
+                    }
+                } else if (authdata) {
+                    // Success -- user is authenticated and can read/write to Firebase.
                 }
             });
+
         });
 
         // Load footer contents
