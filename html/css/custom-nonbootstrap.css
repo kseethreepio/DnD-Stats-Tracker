@@ -25,3 +25,7 @@
 .textWhite {
     color: #ffffff;
 }
+
+td.padded {
+    padding: 10px;
+}

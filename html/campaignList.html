@@ -48,17 +48,7 @@
         <!-- TODO: Load in campaign list w/buttons based on data in Firebase -->
         <h4>Campaign List</h4><br>
 
-        <table class="plain table">
-            <tr class="plain">
-              <td>Campaign name goes here...<br><span class="label label-default">D&amp;D 4e</span></td>
-              <!-- <td><span class="campaignChooseButton">hi</span></td> -->
-              <td><button type="button" class="btn btn-s btn-primary" id="btnChooseCampaign">Choose this campaign</button></td>
-            </tr>
-            <tr class="plain">
-              <td>Campaign name goes here...<br><span class="label label-default">D&amp;D 4e</span></td>
-              <td><button type="button" class="btn btn-s btn-primary" id="btnChooseCampaign">Choose this campaign</button></td>
-            </tr>
-        </table>
+        <table id="tblCampList" class="plain table"></table>
         
         <br>
         <br>
@@ -74,7 +64,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label"Close"><span aria-hidden="true">&times;</span></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h5 class="modal-title" id="addCampaignDialogLabel">Add a new campaign</h5>
                         </div>
                         <div class="modal-body">
