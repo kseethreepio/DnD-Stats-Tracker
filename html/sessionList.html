@@ -86,8 +86,12 @@
         <br>
         <br>
         <p>
-        <button type="button" class="btn btn-xs btn-default" id="btnGoHome">Go home</button>
-        <button type="button" class="btn btn-xs btn-primary" id="btnGoBack">Go back</button>
+        <a href="/">
+            <button type="button" class="btn btn-xs btn-default" id="btnGoHome">Go home</button>
+        </a>
+        <a href="campaignList.html">
+            <button type="button" class="btn btn-xs btn-primary" id="btnGoBack">Go back</button>
+        </a>
 
         <div class="modal fade" id="addSession" tabindex="-1" role="dialog" aria-labelledby="addSessionDialog">
                 <div class="modal-dialog" role="document">
@@ -156,14 +160,6 @@
         
         // TODO: If about to overwrite/existing record there, show warning or error and recommend another name
         baseDataRef.child(sCombinedName).update(jSessionInfo);
-    });
-    
-    $("#btnGoHome").click(function (e) {
-        window.location = "/";
-    });
-
-    $("#btnGoBack").click(function (e) {
-        window.location = "campaignList.html";
     });
 
     $("#btnViewSessionStats").click(function (e) {

@@ -125,9 +125,4 @@ jQuery(document).on("ready", function() {
 
     }
 
-    /* Navigation */
-    jQuery(document).on("click", "#btnGoHome", function() {
-        window.location = "/";
-    });
-
 });
