@@ -70,8 +70,19 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="campaign-name" class="control-label">Campaign name:</label>
-                                    <textarea class="form-control" id="campaignName-text">Delete this text and enter your campaign's name here</textarea>
+                                    <label for="campaignName" class="control-label">Campaign name:</label>
+                                    <input type="text" class="form-control" id="campaignName" placeholder="Type your campaign's name here">
+                                    <br>
+                                    <label for="campaignSystem" class="control-label">Game system:</label>
+                                    <select class="form-control" id="campaignSystem" placeholder="Delete this text and enter the game system used by this campaign">
+                                        <option>D&amp;D 5e</option>
+                                        <option>D&amp;D 4e</option>
+                                        <option>D&amp;D 3.5e</option>
+                                        <option>Savage Worlds</option>
+                                        <option>Star Wars RPG (original)</option>
+                                        <option>Star Wars: Edge of the Empire</option>
+                                        <option>Other</option>
+                                    </select>
                                 </div>
                             </form>
                         </div>

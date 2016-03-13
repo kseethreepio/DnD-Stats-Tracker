@@ -81,6 +81,13 @@ jQuery(document).on("ready", function() {
         campaignsDataRef.on("value", function(snapshot) {
 
             var dataSnapshot = snapshot.val();
+            var tableCampaignList = document.getElementById("tblCampList");
+
+            // Would be better to search list to avoid duplicate elements, but tables
+            // shouldn't ever be too large, so rebuilding isn't the end of the world.
+            while (tableCampaignList.hasChildNodes()) {
+                tableCampaignList.removeChild(tableCampaignList.childNodes[0]);
+            }
 
             for (item in dataSnapshot) {
                 var selectedCampaignName   = dataSnapshot[item].name;
@@ -89,17 +96,33 @@ jQuery(document).on("ready", function() {
                 var newEntryForCampaign    = createCampaignEntry(selectedCampaignName, selectedCampaignSystem);
 
                 newEntryForCampaign.querySelector("button.btn-primary").setAttribute("id", selectedCampaignId);
-                document.getElementById("tblCampList").appendChild(newEntryForCampaign);
+
+                tableCampaignList.appendChild(newEntryForCampaign);
             }
 
         }, function(errorObject) {
             console.log("ERROR: Failed to read DB: " + errorObject.code);
         });
 
+        // Save new campaigns to db
+        jQuery(document).on("click", "#btnSaveCampaignName", function() {
+            var newCampaign = new Object();
+            var enteredName = document.getElementById("campaignName").value;
+            var enteredSystem = document.getElementById("campaignSystem").value;
+            var newCampaignId = enteredName.replace(" ", "").slice(0, 4) + new Date().getTime().toString();
+
+            campaignsDataRef.push({
+                "id": newCampaignId,
+                "name": enteredName,
+                "system": enteredSystem
+            });
+
+        });
+
     }
 
     /* Navigation */
-    $("#btnGoHome").click(function (e) {
+    jQuery(document).on("click", "#btnGoHome", function() {
         window.location = "/";
     });
 
