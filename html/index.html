@@ -35,18 +35,15 @@
   </head>
   <body>
     <div class="container">
-        <div class="header clearfix">
+        <header id="header" class="header clearfix">
             <h4 class="text-muted">Tabletop Sabermetrics</h4>
-            <div id="divUserContext-loggedOut">
-                Please click the button below to log in.
-            </div>
-            <div id="divUserContext-loggedIn" hidden="true">
+            <div id="divUserContext-loggedIn">
                 Signed in as <span id="spanUsername"></span> (<a id="linkSignout" href="#">log out</a>)
             </div>
-        </div>
-        <div id="divLogin" class="text-center">
-            <button type="button" class="btn btn-lg btn-warning" id="btnLogin">Log in with your Google account</button>
-        </div>
+            <div id="divUserContext-loggedOut" hidden="true">
+                Please click the button below to log in.
+            </div>
+        </header>
         <div id="divChooseCampaign" class="jumbotron" hidden="true">
             To get started, <strong>choose a campaign</strong> to view or record dice roll stats.
             <br><br><br>
@@ -54,13 +51,20 @@
                 <button type="button" class="btn btn-lg btn-success" id="btnChooseCampaign">Choose a campaign</button>
             </a>
         </div>
+        <div id="divLogin" class="text-center" hidden="true">
+            <br><br><br>
+            <button type="button" class="btn btn-lg btn-warning" id="btnLogin">Log in with your Google account</button>
+        </div>
     </div>
 
-    <footer class="footer" id="footer-2016"></footer>
+    <footer id="footer-2016" class="footer"></footer>
 
     <!--OK doing this sync/inline for the landing/login page -->
     <script>
     var myDataRef = new Firebase("https://shining-torch-7755.firebaseio.com");
+
+    // Load footer (async)
+    jQuery("#footer-2016").load("footer.html");
 
     // Main DOM events go here
     jQuery(document).on("ready", function() {
@@ -77,6 +81,7 @@
             } else {
                 // User is no longer signed in -- prompt them to log back in.
                 // console.log("Not logged in!");
+                console.log(document.getElementById("divLogin"));
                 document.getElementById("divChooseCampaign").setAttribute("hidden", "true");
                 document.getElementById("divLogin").removeAttribute("hidden");
                 document.getElementById("divUserContext-loggedIn").setAttribute("hidden", "true");
@@ -84,6 +89,7 @@
             }
         }
 
+        authCallback(myDataRef.getAuth());
         myDataRef.onAuth(authCallback);
 
         jQuery(document).on("mousedown", "#linkSignout", function() {
@@ -92,7 +98,6 @@
         });
 
         jQuery(document).on("mousedown", "#btnLogin", function() {
-
             myDataRef.authWithOAuthPopup("google", function(error, authdata) {
                 if (error) {
                     if (error.code === "TRANSPORT_UNAVAILABLE") {
@@ -114,9 +119,6 @@
             });
 
         });
-
-        // Load footer contents
-        jQuery("#footer-2016").load("footer.html");
 
     });
     </script>
