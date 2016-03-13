@@ -30,13 +30,14 @@ jQuery(document).on("ready", function() {
 
         // Template for a single row in the campaign list
         function createEmptyCampaignEntryTemplate() {
-            var row = document.createElement("tr");
-            var cellMetadata = document.createElement("td");  // Campaign metadata
-            var campName = document.createElement("span");  // Holds campaign name
-            var gameSystem = document.createElement("span");  // Label for above td
-            var cellSelectBtn = document.createElement("td");  // To load campaign details
-            var campButton = document.createElement("button");  // Button for above td
-            var pageBreak = document.createElement("br");
+            var row            = document.createElement("tr");
+            var cellMetadata   = document.createElement("td");  // Campaign metadata
+            var campName       = document.createElement("span");  // Holds campaign name
+            var gameSystem     = document.createElement("span");  // Label for above td
+            var cellSelectBtn  = document.createElement("td");  // To load campaign details
+            var campButton     = document.createElement("button");  // Button for above td
+            var campButtonLink = document.createElement("a");  // Link for above button
+            var pageBreak      = document.createElement("br");
 
             // Setting attributes on elemenets
             row.setAttribute("class", "plain");
@@ -53,7 +54,8 @@ jQuery(document).on("ready", function() {
             cellMetadata.appendChild(pageBreak);
             cellMetadata.appendChild(gameSystem);
 
-            cellSelectBtn.appendChild(campButton);
+            cellSelectBtn.appendChild(campButtonLink);
+            campButtonLink.appendChild(campButton);
 
             row.appendChild(cellMetadata);
             row.appendChild(cellSelectBtn);
@@ -70,6 +72,7 @@ jQuery(document).on("ready", function() {
 
             campMetadata.querySelector("span.campName").innerText = campaignName;
             campMetadata.querySelector("span.label-default").innerText = rulesSystem;
+
 
             return campaignEntry;
         }
@@ -96,6 +99,7 @@ jQuery(document).on("ready", function() {
                 var newEntryForCampaign    = createCampaignEntry(selectedCampaignName, selectedCampaignSystem);
 
                 newEntryForCampaign.querySelector("button.btn-primary").setAttribute("id", selectedCampaignId);
+                newEntryForCampaign.querySelector("td.campMoreInfoBtn > a").setAttribute("href", "sessionList.html?id=" + selectedCampaignId);
 
                 tableCampaignList.appendChild(newEntryForCampaign);
             }
