@@ -48,25 +48,26 @@
         <!-- TODO: Load in session list w/buttons based on data in Firebase -->
         <h4>Session List</h4><br>
 
-        <table class="plain table">
-            <tr class="plain">
-              <td>Session name goes here...</td>
-              <td><button type="button" class="btn btn-xs btn-default" id="btnViewSessionStats">View session's stats</button></td>
-            </tr>
-            <tr class="plain">
-              <td>Session name goes here...</td>
-              <td><button type="button" class="btn btn-xs btn-default" id="btnViewSessionStats">View session's stats</button></td>
-            </tr>
-        </table>
+        <div id="noCampaignChosen" class="jumbotron" hidden="true">
+            We can't load a list of sessions because you haven't picked a campaign. You need to go back to the campaign list and click on one of the <strong>choose this campaign</strong> buttons to load a campaign's session list.
+            <br><br><br>
+            <a href="campaignList.html">
+                <button id="btnChooseCampaign" type="button" class="btn btn-lg btn-success">Go back and choose a campaign</button>
+            </a>
+        </div>
+
+        <div id="noSessionsInCampaign" class="jumbotron" hidden="true">
+            There aren't any sessions associated with this campaign yet. You first need to <strong>create a session</strong> to create a session and record stats.
+            <br><br><br>
+            <button id="btnAddSessionUpsell" type="button" class="btn btn-lg btn-success" data-toggle="modal" data-target="#addSession">Create a new session</button>
+        </div>
+
+        <table id="tblSessionList" class="plain table"></table>
         
-        <br>
-        <br>
-        <p>
+        <br><br><br>
         
-        <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#addSession">+ Add session</button>
-        <br>
-        <br>
-        <p>
+        <button id="btnAddSession" type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#addSession">+ Add session</button>
+        <br><br><br>
         <a href="/">
             <button type="button" class="btn btn-xs btn-default" id="btnGoHome">Go home</button>
         </a>
@@ -84,17 +85,12 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="session-name" class="control-label">Session name:</label>
-                                    <textarea class="form-control" id="sessionName-text">Delete this text and enter the session's name here (suggestion: use the session's date as its name)</textarea>
+                                    <label for="sessionName" class="control-label">Session name:</label>
+                                    <input class="form-control" id="sessionName" placeholder="Enter the session's name here (suggestion: use the session's date as its name)">
+                                    <br>
+                                    <label for="pcNames" class="control-label">Player characters' names:</label>
+                                    <input class="form-control" id="pcNames" placeholder="Enter the player characters' names, separated by commas">
                                 </div>
-                                <div class="form-group">
-                                    <label for="players-name" class="control-label">Player characters' names:</label>
-                                    <textarea class="form-control" id="pcNames-text">Delete this text and enter the player characters' names, separated by commas</textarea>
-                                </div>
-                                <!-- <div class="form-group">
-                                    <label for="track-all-rolls" class="control-label">Check this if you will be tracking every single roll (i.e. not just 1s and 20s)</label>
-                                    <input type="checkbox" class="form-control" id="trackAllRolls-checkbox" value="true">
-                                </div> -->
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -103,8 +99,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
+        </div>
     </div>
 
     <footer class="footer" id="footer-2016"></footer>

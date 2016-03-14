@@ -29,3 +29,8 @@
 td.padded {
     padding: 10px;
 }
+
+span.sessPCs {
+    color: #c9c9c9;
+    font-size: small;
+}
