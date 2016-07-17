@@ -247,4 +247,27 @@ jQuery(document).on("ready", function() {
 
     }
 
+    if (window.location.pathname === "/sessionStats.html" && window.location.search !== "") {
+
+        // TODO: Tag -- <br><span class="label label-success">Winner winner, chicken dinner</span>
+        // TODO: Tag -- <br><span class="label label-danger"><a href="https://bit.ly/1JC4xw9" class="textWhite">https://bit.ly/1JC4xw9</a></span>
+
+        // Set checkbox to enable/disable further recording of rolls
+        $(document).on("click", "#btnLockPage", function() {
+          var rollButtons = document.querySelectorAll("div.btn-group-vertical > button");
+
+          if ($("#btnLockPage:checked").length === 1) {
+            for (var i = 0; i < rollButtons.length; i++) {
+              rollButtons[i].setAttribute("disabled", "true");
+            }        
+          } else if ($("#btnLockPage:checked").length === 0) {
+            for (var i = 0; i < rollButtons.length; i++) {
+              rollButtons[i].removeAttribute("disabled");
+            }
+          }
+
+        });
+
+    }
+
 });

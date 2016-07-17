@@ -34,3 +34,17 @@ span.sessPCs {
     color: #c9c9c9;
     font-size: small;
 }
+
+input.med-checkbox {
+    width: 30px;
+    height: 30px;
+    vertical-align: bottom;
+}
+
+.med-checkbox-text {
+    font-size: x-large;
+}
+
+#spanNumMobs {
+    padding-right: 10px;
+}
